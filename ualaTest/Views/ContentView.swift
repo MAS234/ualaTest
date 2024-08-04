@@ -47,6 +47,10 @@ struct ContentView: View {
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
+            Text("Ciudades")
+                .font(.title2)
+                .padding(.top, 10)
+
             List {
                 ForEach(viewModel.filterCities(prefix: searchText)) { city in
                     HStack {
@@ -56,15 +60,13 @@ struct ContentView: View {
                             Text("Lat: \(city.coord.lat), Lon: \(city.coord.lon)")
                                 .font(.subheadline)
                         }
+                        .padding()
+                        .background(selectedCity == city ? Color.blue.opacity(0.2) : Color.clear)
+                        .cornerRadius(8)
+                        .scaleEffect(selectedCity == city ? 1.1 : 1.0)
+                        .animation(.easeInOut(duration: 0.2), value: selectedCity)
                         .onTapGesture {
-                            if geometry.size.width > geometry.size.height {
-                                // Horizontal Orientation: Update the map view
-                                viewModel.selectedCity = city
-                                selectedCity = city
-                            } else {
-                                // Vertical Orientation: Navigate to the map view
-                                selectedCity = city
-                            }
+                            handleCitySelection(city)
                         }
                     }
                     .contentShape(Rectangle())
@@ -83,7 +85,17 @@ struct ContentView: View {
             }
         )
     }
+
+    private func handleCitySelection(_ city: City) {
+        selectedCity = city
+    }
 }
+
+
+
+
+
+
 
 
 

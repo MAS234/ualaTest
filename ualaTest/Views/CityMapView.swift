@@ -7,11 +7,11 @@ import SwiftUI
 import MapKit
 
 struct CityMapView: View {
-    @ObservedObject var viewModel: CityMapViewModel
+    @StateObject private var viewModel: CityMapViewModel
     @State private var showDetails = false
 
     init(city: City) {
-        self.viewModel = CityMapViewModel(city: city)
+        _viewModel = StateObject(wrappedValue: CityMapViewModel(city: city))
     }
 
     var body: some View {
@@ -40,12 +40,10 @@ struct CityMapView: View {
                 CityDetailView(city: viewModel.city)
             }
         }
-        .onChange(of: viewModel.city) { newCity in
-            viewModel.updateRegion(for: newCity)
+        .onAppear {
+            viewModel.updateRegion(for: viewModel.city)
         }
     }
 }
-
-
 
 
