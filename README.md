@@ -4,7 +4,7 @@ Este proyecto es una aplicación móvil diseñada para listar y buscar ciudades 
 
 ## Enfoque de la Solución
 
-En primer lugar, me enfoqué en la consulta a la API para la obtención de los datos. La carga de datos se realizó de manera asíncrona para asegurar que la aplicación permaneciera responsiva durante este proceso.
+En primer lugar, me enfoqué en la consulta a la API para la obtención de los datos. La carga de datos se realizó de manera asíncrona.
 
 Una vez que los datos fueron obtenidos y registrados, procedí a listar la información de las ciudades de manera que se mostrara toda la información relevante traída desde la API. Para darle forma a estos datos y asegurar una estructura coherente, creé los modelos necesarios. Estos modelos representan la estructura de los datos de las ciudades, facilitando su manipulación y presentación en la aplicación.
 
