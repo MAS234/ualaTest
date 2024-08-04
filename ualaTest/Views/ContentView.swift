@@ -4,7 +4,6 @@
 //
 //  Created by Miguel Martinez on 03/08/2024.
 //
-
 import SwiftUI
 
 struct ContentView: View {
@@ -13,32 +12,31 @@ struct ContentView: View {
     @State private var selectedCity: City? = nil
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                if geometry.size.width > geometry.size.height {
-                    // Horizontal Orientation
-                    HStack {
-                        cityList(geometry: geometry)
-                        if let city = selectedCity {
-                            CityMapView(city: city)
-                                .frame(width: geometry.size.width / 2)
-                                .id(city.id) // Add id to force view update
-                        } else {
-                            Spacer()
-                                .frame(width: geometry.size.width / 2)
+        NavigationView {
+            GeometryReader { geometry in
+                VStack {
+                    if geometry.size.width > geometry.size.height {
+                        // Horizontal Orientation
+                        HStack {
+                            cityList(geometry: geometry)
+                            if let city = selectedCity {
+                                CityMapView(viewModel: CityMapViewModel(city: city))
+                                    .frame(width: geometry.size.width / 2)
+                                    .id(city.id) // Ensure the map view updates
+                            } else {
+                                Spacer()
+                                    .frame(width: geometry.size.width / 2)
+                            }
                         }
-                    }
-                } else {
-                    // Vertical Orientation
-                    NavigationView {
+                    } else {
+                        // Vertical Orientation
                         cityList(geometry: geometry)
                     }
-                    .navigationTitle("Ciudades")
                 }
             }
-        }
-        .onAppear {
-            viewModel.loadCities()
+            .onAppear {
+                viewModel.loadCities()
+            }
         }
     }
 
@@ -73,31 +71,24 @@ struct ContentView: View {
                     .contentShape(Rectangle())
                 }
             }
+            .background(
+                NavigationLink(
+                    destination: CityMapView(viewModel: CityMapViewModel(city: selectedCity ?? City(id: 0, country: "", name: "", coord: Coord(lat: 0, lon: 0)))),
+                    isActive: Binding(
+                        get: { selectedCity != nil && geometry.size.width <= geometry.size.height },
+                        set: { if !$0 { selectedCity = nil } }
+                    )
+                ) {
+                    EmptyView()
+                }
+            )
         }
-        .background(
-            NavigationLink(
-                destination: CityMapView(city: selectedCity ?? City(id: 0, country: "", name: "", coord: Coord(lat: 0, lon: 0))),
-                isActive: Binding(
-                    get: { selectedCity != nil && geometry.size.width <= geometry.size.height },
-                    set: { if !$0 { selectedCity = nil } }
-                )
-            ) {
-                EmptyView()
-            }
-        )
     }
 
     private func handleCitySelection(_ city: City) {
         selectedCity = city
     }
 }
-
-
-
-
-
-
-
 
 
 

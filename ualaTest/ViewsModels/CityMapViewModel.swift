@@ -7,33 +7,53 @@
 
 import Foundation
 import MapKit
+import Combine
 
 class CityMapViewModel: ObservableObject {
-    @Published var region: MKCoordinateRegion
-    var coordinate: IdentifiableCoordinate
-    var city: City
-
+    @Published var city: City
+    
     init(city: City) {
         self.city = city
+    }
+
+    func getCoordinate() -> IdentifiableCoordinate {
         let coord = CLLocationCoordinate2D(latitude: city.coord.lat, longitude: city.coord.lon)
-        self.coordinate = IdentifiableCoordinate(coordinate: coord)
-        self.region = MKCoordinateRegion(
+        return IdentifiableCoordinate(coordinate: coord)
+    }
+
+    func getRegion() -> MKCoordinateRegion {
+        let coord = getCoordinate().coordinate
+        return MKCoordinateRegion(
             center: coord,
             span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         )
     }
-
-    func updateRegion(for city: City) {
-        DispatchQueue.main.async {
-            let coord = CLLocationCoordinate2D(latitude: city.coord.lat, longitude: city.coord.lon)
-            self.coordinate = IdentifiableCoordinate(coordinate: coord)
-            self.region = MKCoordinateRegion(
-                center: coord,
-                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            )
-        }
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

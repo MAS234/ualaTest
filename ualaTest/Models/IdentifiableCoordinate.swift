@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 
 struct IdentifiableCoordinate: Identifiable {
-    var coordinate: CLLocationCoordinate2D
-    var id: UUID = UUID()
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
 }
+
