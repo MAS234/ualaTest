@@ -20,3 +20,24 @@ El proyecto está organizado de la siguiente manera, utilice la arquitectura MVV
 - **ViewModels**: Contiene la lógica de la aplicación para gestionar los datos y la búsqueda de ciudades (`CityViewModel` y `CityMapViewModel`).
 - **Views**: Contiene las vistas principales de la aplicación (`ContentView`, `CityMapView`, `CityDetailView`).
 - **Tests**: Contiene las pruebas unitarias y de UI para el proyecto.
+
+
+# testUala
+This project is a mobile application designed to list and search for cities from an API. The application allows filtering cities by prefix, displaying the results in a list, and, upon selecting a city, showing its location on a map.
+
+## Solution Approach
+First, I focused on querying the API to obtain the data. Data loading was performed asynchronously.
+
+Once the data was obtained and recorded, I proceeded to list the information of the cities in a way that all relevant information brought from the API was displayed. To shape these data and ensure a coherent structure, I created the necessary models. These models represent the structure of the city data, facilitating their manipulation and presentation in the application.
+
+In the ViewModel, I managed both data retrieval and the logic for searching the cities. This component acts as an intermediary between the models and the views, controlling how data is retrieved, filtered, and processed before being presented.
+
+Finally, the views were automatically updated with the information provided by the ViewModel. This means that the views dynamically display the cities and their locations on the map.
+
+## Project Structure
+The project is organized as follows, using the MVVM architecture:
+
+- **Models**: Contains the definition of the City and Coord models.
+- **ViewModels**: Contains the application logic to manage the data and city searches (CityViewModel and CityMapViewModel).
+- **Views**: Contains the main views of the application (ContentView, CityMapView, CityDetailView).
+- **Tests**: Contains unit and UI tests for the project.
